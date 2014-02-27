@@ -34,8 +34,6 @@ public abstract class Crypt {
   
   public static final String CHARACTER_ENCODING = "UTF-8";
   
-  private static final String BASE64_SET = "./0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-  
   protected final Type type;
   
   protected Crypt(Type type) {
@@ -58,7 +56,9 @@ public abstract class Crypt {
       throws NoSuchAlgorithmException, UnsupportedEncodingException {
     Salt s = new Salt(salt);
     Password p = new Password(password);
-    return Crypt.newInstance(Type.forSalt(s)).doCrypt(p, s);
+    String encrypted = Crypt.newInstance(Type.forSalt(s)).doCrypt(p, s);
+    p.clear();
+    return encrypted;
   }
 
   private static Crypt newInstance(Type type) 
@@ -98,20 +98,6 @@ public abstract class Crypt {
     catch (IOException ex) {
       throw new RuntimeException(ex);
     }
-  }
-  
-  protected char[] toBase64(byte b2, byte b1, byte b0, int n) {
-    char[] buf = new char[n];
-    int i = 0;
-    int w = (((int) b2 & 0xff) << 16) 
-          | (((int) b1 & 0xff) << 8) 
-          | ((int) b0 & 0xff);
-    
-    while (i < n) {
-      buf[i++] = BASE64_SET.charAt(w & 0x3f);
-      w >>>= 6;
-    }
-    return buf;
   }
   
   protected String passwordToString(byte[] password, Salt salt, 
