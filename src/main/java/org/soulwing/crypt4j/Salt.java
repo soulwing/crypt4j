@@ -56,7 +56,7 @@ class Salt {
     }
     
     extent = salt.indexOf('$', index);
-    if (extent == -1) {
+    if (extent == -1 || salt.substring(index, extent).indexOf('=') == -1) {
       this.params = null;
     }
     else {
@@ -66,8 +66,12 @@ class Salt {
         throw new IllegalArgumentException("illegal salt format");
       }
     }
-    
-    this.text = salt.substring(index, salt.length());
+
+    extent = salt.indexOf('$', index);
+    if (extent == -1) {
+      extent = salt.length();
+    }
+    this.text = salt.substring(index, extent);
   }
 
   /**

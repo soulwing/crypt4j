@@ -41,7 +41,7 @@ public class SaltTest {
   }
 
   @Test
-  public void testTypedWithNoParams() throws Exception {
+  public void testTypedWithSaltOnly() throws Exception {
     Salt salt = new Salt("$1$aSalt");
     assertThat(salt.getText(), is(equalTo("aSalt")));
     assertThat(salt.getType(), is(equalTo(1)));
@@ -50,10 +50,27 @@ public class SaltTest {
 
   @Test
   public void testTypedWithParams() throws Exception {
-    Salt salt = new Salt("$1$params$aSalt");
+    Salt salt = new Salt("$1$param=value$aSalt");
     assertThat(salt.getText(), is(equalTo("aSalt")));
     assertThat(salt.getType(), is(equalTo(1)));
-    assertThat(salt.getParams(), is(equalTo("params")));
+    assertThat(salt.getParams(), is(equalTo("param=value")));
   }
+
+  @Test
+  public void testTypedWithPassword() throws Exception {
+    Salt salt = new Salt("$1$aSalt$password");
+    assertThat(salt.getText(), is(equalTo("aSalt")));
+    assertThat(salt.getType(), is(equalTo(1)));
+    assertThat(salt.getParams(), is(nullValue()));
+  }
+
+  @Test
+  public void testTypedWithParamsAndPassword() throws Exception {
+    Salt salt = new Salt("$1$param=value$aSalt$password");
+    assertThat(salt.getText(), is(equalTo("aSalt")));
+    assertThat(salt.getType(), is(equalTo(1)));
+    assertThat(salt.getParams(), is(equalTo("param=value")));
+  }
+
 
 }
