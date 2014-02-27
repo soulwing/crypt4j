@@ -18,6 +18,8 @@
  */
 package org.soulwing.crypt4j;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -54,7 +56,7 @@ abstract class Sha2Crypt extends Crypt {
     Integer rounds = rounds(salt);
     byte[] encrypted = doCrypt(password.getBytes(CHARACTER_ENCODING), 
         salt.getBytes(MAX_SALT_LENGTH, CHARACTER_ENCODING),
-        rounds);
+        rounds == null ? DEFAULT_ROUNDS : rounds);
     
     return passwordToString(encrypted, salt, MAX_SALT_LENGTH, rounds);
   }
@@ -68,6 +70,12 @@ abstract class Sha2Crypt extends Crypt {
     return ROUNDS_PARAM + params[0];
   }
 
+  /**
+   * Gets the number of rounds explicitly requested in the given salt
+   * @param salt the subject salt
+   * @return number of rounds requested or {@code null} if the salt does not
+   *    specify the number of rounds
+   */
   private Integer rounds(Salt salt) {
     String params = salt.getParams();
     if (params == null || !params.startsWith(ROUNDS_PARAM)) return null;  
@@ -77,12 +85,16 @@ abstract class Sha2Crypt extends Crypt {
     return rounds;
   }
   
-  private byte[] doCrypt(byte[] password, byte[] salt, Integer rounds)
+  /**
+   * Encrypts the given password.
+   * @param password the password to encrypt
+   * @param salt salt for the encryption
+   * @param rounds number of rounds requested
+   * @return
+   * @throws NoSuchAlgorithmException
+   */
+  private byte[] doCrypt(byte[] password, byte[] salt, int rounds)
       throws NoSuchAlgorithmException {
-    
-    if (rounds == null) {
-      rounds = DEFAULT_ROUNDS;
-    }
     
     /* 1. start digest A */
     final MessageDigest a = type.newDigest();
@@ -230,5 +242,26 @@ abstract class Sha2Crypt extends Crypt {
     return ac;
   }
 
- 
+  /**
+   * Makes a sequence as described as steps 16 and 20 of the algorithm.
+   * @param sum the intermediate sum to place into the sequence
+   * @param length length of the sequence in bytes
+   * @param digestLength length of the digest in bytes
+   * @return sequence
+   */
+  private byte[] makeSequence(byte[] sum, int length,
+      final int digestLength) {
+    try {
+      ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+      for (int i = 0, max = length / digestLength; i < max; i++) {
+        outputStream.write(sum);
+      }
+      outputStream.write(sum, 0, length % digestLength);
+      return outputStream.toByteArray();
+    }
+    catch (IOException ex) {
+      throw new RuntimeException(ex);
+    }
+  }
+
 }

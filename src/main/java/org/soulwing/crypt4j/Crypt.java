@@ -18,8 +18,6 @@
  */
 package org.soulwing.crypt4j;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -36,6 +34,10 @@ public abstract class Crypt {
   
   protected final Type type;
   
+  /**
+   * Constructs a new instance.
+   * @param type
+   */
   protected Crypt(Type type) {
     this.type = type;
   }
@@ -61,6 +63,11 @@ public abstract class Crypt {
     return encrypted;
   }
 
+  /**
+   * Constructs a new instance of the specified type.
+   * @param type crypt type
+   * @return new crypt object
+   */
   private static Crypt newInstance(Type type) 
       throws NoSuchAlgorithmException {
     try {
@@ -82,23 +89,18 @@ public abstract class Crypt {
     }
   }
   
+  /**
+   * Performs the password encryption operation.
+   * @param password the password to encrypt
+   * @param salt salt for the encryption
+   * @return formatted crypt output string
+   * @throws NoSuchAlgorithmException if the specified encryption type cannot
+   *    be supported on the platform
+   * @throws UnsupportedEncodingException if the password character encoding
+   *    cannot be supported on the platform
+   */
   protected abstract String doCrypt(Password password, Salt salt)
       throws NoSuchAlgorithmException, UnsupportedEncodingException;
-  
-  protected byte[] makeSequence(byte[] sum, int length,
-      final int digestLength) {
-    try {
-      ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-      for (int i = 0, max = length / digestLength; i < max; i++) {
-        outputStream.write(sum);
-      }
-      outputStream.write(sum, 0, length % digestLength);
-      return outputStream.toByteArray();
-    }
-    catch (IOException ex) {
-      throw new RuntimeException(ex);
-    }
-  }
   
   /**
    * Converts the encrypted password to a crypt output string.
