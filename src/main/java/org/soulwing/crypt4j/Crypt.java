@@ -100,6 +100,15 @@ public abstract class Crypt {
     }
   }
   
+  /**
+   * Converts the encrypted password to a crypt output string.
+   * @param password the encrypted password
+   * @param salt salt
+   * @param maxSaltLength maximum allowable length for the salt
+   * @param params subclass-specific parameters (these will be passed to
+   *    {@link #encodeParameters(Object...)}
+   * @return crypt output string
+   */
   protected String passwordToString(byte[] password, Salt salt, 
       int maxSaltLength, Object... params) {
     StringBuilder sb = new StringBuilder();
@@ -118,14 +127,23 @@ public abstract class Crypt {
     return sb.toString();
   }
 
+  /**
+   * Encodes the parameters specified with the salt in the crypt output
+   * string.
+   * @param params the subclass-specific parameters provided to
+   *    {@link #passwordToString(byte[], Salt, int, Object...)}
+   * @return string encoding of parameters or {@code null} to indicate that
+   *    no parameters are needed in the ouptut string
+   */
   protected String encodeParameters(Object... params) {
     throw new UnsupportedOperationException();
   }
 
+  /**
+   * Encodes the password for use in the crypt output string.
+   * @param password the password to encode
+   * @return string encoding of {@code password}
+   */
   protected abstract String encodePassword(byte[] password);
 
-  public static void main(String[] args) throws Exception {
-    System.out.println(
-        Crypt.crypt("Hello world!".toCharArray(), "$6$rounds=10000$saltstring"));
-  }
 }
