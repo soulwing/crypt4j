@@ -17,7 +17,7 @@
  *
  */
 /**
- * DESCRIBE THE TYPE HERE.
+ * Provides password encryption compatible with UNIX crypt(3)
  *
  * @author Carl Harris
  */

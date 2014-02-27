@@ -19,12 +19,16 @@
 package org.soulwing.crypt4j;
 
 /**
- * DESCRIBE THE TYPE HERE.
+ * A SHA-512 crypt implementation.
  *
  * @author Carl Harris
  */
 class Sha512Crypt extends Sha2Crypt {
 
+  /**
+   * Constructs a new instance.
+   * @param type
+   */
   public Sha512Crypt(Type type) {
     super(type);
   }
@@ -35,28 +39,28 @@ class Sha512Crypt extends Sha2Crypt {
   @Override
   protected String encodePassword(byte[] password) {
     StringBuilder sb = new StringBuilder();
-    sb.append(toBase64(password[0], password[21], password[42], 4));
-    sb.append(toBase64(password[22], password[43], password[1], 4));
-    sb.append(toBase64(password[44], password[2], password[23], 4));
-    sb.append(toBase64(password[3], password[24], password[45], 4));
-    sb.append(toBase64(password[25], password[46], password[4], 4));
-    sb.append(toBase64(password[47], password[5], password[26], 4));
-    sb.append(toBase64(password[6], password[27], password[48], 4));
-    sb.append(toBase64(password[28], password[49], password[7], 4));
-    sb.append(toBase64(password[50], password[8], password[29], 4));
-    sb.append(toBase64(password[9], password[30], password[51], 4));
-    sb.append(toBase64(password[31], password[52], password[10], 4));
-    sb.append(toBase64(password[53], password[11], password[32], 4));
-    sb.append(toBase64(password[12], password[33], password[54], 4));
-    sb.append(toBase64(password[34], password[55], password[13], 4));
-    sb.append(toBase64(password[56], password[14], password[35], 4));
-    sb.append(toBase64(password[15], password[36], password[57], 4));
-    sb.append(toBase64(password[37], password[58], password[16], 4));
-    sb.append(toBase64(password[59], password[17], password[38], 4));
-    sb.append(toBase64(password[18], password[39], password[60], 4));
-    sb.append(toBase64(password[40], password[61], password[19], 4));
-    sb.append(toBase64(password[62], password[20], password[41], 4));
-    sb.append(toBase64((byte) 0, (byte) 0, password[63], 2));
+    sb.append(Base64.encode(password[0], password[21], password[42], 4));
+    sb.append(Base64.encode(password[22], password[43], password[1], 4));
+    sb.append(Base64.encode(password[44], password[2], password[23], 4));
+    sb.append(Base64.encode(password[3], password[24], password[45], 4));
+    sb.append(Base64.encode(password[25], password[46], password[4], 4));
+    sb.append(Base64.encode(password[47], password[5], password[26], 4));
+    sb.append(Base64.encode(password[6], password[27], password[48], 4));
+    sb.append(Base64.encode(password[28], password[49], password[7], 4));
+    sb.append(Base64.encode(password[50], password[8], password[29], 4));
+    sb.append(Base64.encode(password[9], password[30], password[51], 4));
+    sb.append(Base64.encode(password[31], password[52], password[10], 4));
+    sb.append(Base64.encode(password[53], password[11], password[32], 4));
+    sb.append(Base64.encode(password[12], password[33], password[54], 4));
+    sb.append(Base64.encode(password[34], password[55], password[13], 4));
+    sb.append(Base64.encode(password[56], password[14], password[35], 4));
+    sb.append(Base64.encode(password[15], password[36], password[57], 4));
+    sb.append(Base64.encode(password[37], password[58], password[16], 4));
+    sb.append(Base64.encode(password[59], password[17], password[38], 4));
+    sb.append(Base64.encode(password[18], password[39], password[60], 4));
+    sb.append(Base64.encode(password[40], password[61], password[19], 4));
+    sb.append(Base64.encode(password[62], password[20], password[41], 4));
+    sb.append(Base64.encode((byte) 0, (byte) 0, password[63], 2));
     return sb.toString();
   }
   
