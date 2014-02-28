@@ -27,4 +27,4 @@ import org.soulwing.crypt4j.Crypt;
   String md5 = Crypt.crypt("Hello world!".toCharArray(), "$1$saltstring");
   assert md5.equals("$1$saltstri$YMyguxXMBpd2TEZ.vS/3q1");
 }
-'''
+```
