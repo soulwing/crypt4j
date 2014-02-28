@@ -24,7 +24,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * 
+ * A utility class that encrypts password strings using algorithms that 
+ * are compatible with {@code crypt(3)} from the GNU C library.
  *
  * @author Carl Harris
  */
