@@ -6,7 +6,10 @@ library (glibc).  This implementation supports the MD5, SHA-256, and SHA-512
 variants, but doesn't bother with legacy DES.
 
 Usage
-=====
+-----
+
+The ```Crypt.crypt``` static method provides the main entry point.  The 
+calling arguments are consistent with the ```crypt(3)``` function.
 
 ```
 import org.soulwing.crypt4j.Crypt;
