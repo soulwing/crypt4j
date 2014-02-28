@@ -24,17 +24,17 @@ import java.lang.reflect.InvocationTargetException;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * A utility class that encrypts password strings using algorithms that 
- * are compatible with {@code crypt(3)} from the GNU C library.
- *
+ * A utility class that encrypts password strings using algorithms that are
+ * compatible with {@code crypt(3)} from the GNU C library.
+ * 
  * @author Carl Harris
  */
 public abstract class Crypt {
-  
+
   public static final String CHARACTER_ENCODING = "UTF-8";
-  
+
   protected final Type type;
-  
+
   /**
    * Constructs a new instance.
    * @param type
@@ -42,20 +42,20 @@ public abstract class Crypt {
   protected Crypt(Type type) {
     this.type = type;
   }
-  
+
   /**
-   * Encrypts (digests) the given password using the algorithm identified
-   * by the given salt.
+   * Encrypts (digests) the given password using the algorithm identified by the
+   * given salt.
    * @param password the password to encrypt
    * @param salt algorithm identifier, parameters, and salt text
    * @return the encrypted (digested) password
-   * @throws NoSuchAlgorithmException if the desired algorithm is not 
-   *    supported on this platform
-   * @throws UnsupportedEncodingException if UTF-8 encoding is not available
-   *    not the platform
-   *
+   * @throws NoSuchAlgorithmException if the desired algorithm is not supported
+   *         on this platform
+   * @throws UnsupportedEncodingException if UTF-8 encoding is not available not
+   *         the platform
+   * 
    */
-  public static String crypt(char[] password, String salt) 
+  public static String crypt(char[] password, String salt)
       throws NoSuchAlgorithmException, UnsupportedEncodingException {
     Salt s = new Salt(salt);
     Password p = new Password(password);
@@ -69,10 +69,9 @@ public abstract class Crypt {
    * @param type crypt type
    * @return new crypt object
    */
-  private static Crypt newInstance(Type type) 
-      throws NoSuchAlgorithmException {
+  private static Crypt newInstance(Type type) throws NoSuchAlgorithmException {
     try {
-      Constructor<? extends Crypt> constructor = 
+      Constructor<? extends Crypt> constructor =
           type.providerClass.getConstructor(Type.class);
       return constructor.newInstance(type);
     }
@@ -89,30 +88,30 @@ public abstract class Crypt {
       throw new RuntimeException(ex);
     }
   }
-  
+
   /**
    * Performs the password encryption operation.
    * @param password the password to encrypt
    * @param salt salt for the encryption
    * @return formatted crypt output string
-   * @throws NoSuchAlgorithmException if the specified encryption type cannot
-   *    be supported on the platform
+   * @throws NoSuchAlgorithmException if the specified encryption type cannot be
+   *         supported on the platform
    * @throws UnsupportedEncodingException if the password character encoding
-   *    cannot be supported on the platform
+   *         cannot be supported on the platform
    */
   protected abstract String doCrypt(Password password, Salt salt)
       throws NoSuchAlgorithmException, UnsupportedEncodingException;
-  
+
   /**
    * Converts the encrypted password to a crypt output string.
    * @param password the encrypted password
    * @param salt salt
    * @param maxSaltLength maximum allowable length for the salt
    * @param params subclass-specific parameters (these will be passed to
-   *    {@link #encodeParameters(Object...)}
+   *        {@link #encodeParameters(Object...)}
    * @return crypt output string
    */
-  protected String passwordToString(byte[] password, Salt salt, 
+  protected String passwordToString(byte[] password, Salt salt,
       int maxSaltLength, Object... params) {
     StringBuilder sb = new StringBuilder();
     if (salt.getType() == 0) {
@@ -131,12 +130,11 @@ public abstract class Crypt {
   }
 
   /**
-   * Encodes the parameters specified with the salt in the crypt output
-   * string.
+   * Encodes the parameters specified with the salt in the crypt output string.
    * @param params the subclass-specific parameters provided to
-   *    {@link #passwordToString(byte[], Salt, int, Object...)}
-   * @return string encoding of parameters or {@code null} to indicate that
-   *    no parameters are needed in the ouptut string
+   *        {@link #passwordToString(byte[], Salt, int, Object...)}
+   * @return string encoding of parameters or {@code null} to indicate that no
+   *         parameters are needed in the ouptut string
    */
   protected String encodeParameters(Object... params) {
     throw new UnsupportedOperationException();
@@ -148,5 +146,28 @@ public abstract class Crypt {
    * @return string encoding of {@code password}
    */
   protected abstract String encodePassword(byte[] password);
+
+  /**
+   * Simple demo. Be sure to run with {@code java -ea} to enable assertions.
+   * @param args
+   */
+  public static void main(String[] args) throws Exception {
+    // SHA-512
+    String sha512 =
+        Crypt.crypt("Hello world!".toCharArray(), "$6$saltstring");
+    System.out.println(sha512);
+    assert sha512.equals("$6$saltstring$svn8UoSVapNtMuq1ukKS4tPQd8iKwSMHWjl/O817G3uBnIFNjnQJuesI68u4OTLiBFdcbYEdFCoEOfaS35inz1");
+
+    // SHA-256
+    String sha256 =
+        Crypt.crypt("Hello world!".toCharArray(), "$5$saltstring");
+    System.out.println(sha256);
+    assert sha256.equals("$5$saltstring$5B8vYYiY.CVt1RlTTf8KbXBH3hsxY/GNooZaBBGWEc5");
+
+    // MD5
+    String md5 = Crypt.crypt("Hello world!".toCharArray(), "$1$saltstring");
+    System.out.println(md5);
+    assert md5.equals("$1$saltstri$YMyguxXMBpd2TEZ.vS/3q1");
+  }
 
 }
