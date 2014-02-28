@@ -4,20 +4,110 @@
   <groupId>org.soulwing</groupId>
   <artifactId>crypt4j</artifactId>
   <version>1.0.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
   <name>Crypt4j</name>
   <description>Unix crypt(3) for Java.</description>
+  <url>https://github.com/soulwing/crypt4j</url>
+  <inceptionYear>2014</inceptionYear>
+  <licenses>
+    <license>
+      <name>ASL 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <id>ceharris</id>
+      <name>Carl Harris</name>
+      <email>ceharris@vt.edu</email>
+    </developer>
+  </developers>
+  <scm>
+    <connection>scm:git:git@github.com:soulwing/crypt4j.git</connection>
+    <developerConnection>${project.scm.connection}</developerConnection>
+    <url>https://github.com/soulwing/crypt4j</url>
+    <tag>HEAD</tag>
+  </scm>
   <build>
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
-          <source>1.7</source>
-          <target>1.7</target>
+          <source>${java.version.source}</source>
+          <target>${java.version.target}</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <includes>
+            <include>**/*Test.java</include>
+          </includes>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-source-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>jar-no-fork</goal>
+              <goal>test-jar-no-fork</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <configuration>
+          <links>
+            <link>http://docs.oracle.com/javase/7/docs/api</link>
+          </links>
+        </configuration>
+        <executions>
+          <execution>
+            <id>attach-javadocs</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>jar</goal>
+              <goal>test-jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-gpg-plugin</artifactId>
+        <configuration>
+          <useAgent>true</useAgent>
+        </configuration>
+        <executions>
+          <execution>
+            <id>sign-artifacts</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>sign</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-release-plugin</artifactId>
+        <configuration>
+          <tagNameFormat>REL-@{project.version}</tagNameFormat>
+          <useReleaseProfile>false</useReleaseProfile>
+          <autoVersionSubmodules>true</autoVersionSubmodules>
+          <mavenExecutorId>forked-path</mavenExecutorId>
         </configuration>
       </plugin>
     </plugins>
     <pluginManagement>
       <plugins>
+        <plugin>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>2.6</version>
+        </plugin>
         <plugin>
           <artifactId>maven-compiler-plugin</artifactId>
           <version>3.1</version>
@@ -25,6 +115,26 @@
         <plugin>
           <artifactId>maven-surefire-plugin</artifactId>
           <version>2.16</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-source-plugin</artifactId>
+          <version>2.2.1</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <version>2.9.1</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>2.4</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-gpg-plugin</artifactId>
+          <version>1.5</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-release-plugin</artifactId>
+          <version>2.4</version>
         </plugin>
       </plugins>
     </pluginManagement>
@@ -43,7 +153,24 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+  <distributionManagement>
+    <repository>
+      <id>releases</id>
+      <name>Releases</name>
+      <url>https://nexus.cns.vt.edu/nexus/content/repositories/oss-releases</url>
+    </repository>
+    <snapshotRepository>
+      <id>snapshots</id>
+      <name>Snapshots</name>
+      <url>https://nexus.cns.vt.edu/nexus/content/repositories/oss-snapshots</url>
+      <uniqueVersion>true</uniqueVersion>
+    </snapshotRepository>
+  </distributionManagement>
   <properties>
+    <java.version.source>1.7</java.version.source>
+    <java.version.target>${java.version.source}</java.version.target>
     <hamcrest.version>1.3</hamcrest.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
   </properties>
 </project>
