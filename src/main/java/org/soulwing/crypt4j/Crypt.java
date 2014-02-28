@@ -152,22 +152,16 @@ public abstract class Crypt {
    * @param args
    */
   public static void main(String[] args) throws Exception {
-    // SHA-512
-    String sha512 =
-        Crypt.crypt("Hello world!".toCharArray(), "$6$saltstring");
-    System.out.println(sha512);
-    assert sha512.equals("$6$saltstring$svn8UoSVapNtMuq1ukKS4tPQd8iKwSMHWjl/O817G3uBnIFNjnQJuesI68u4OTLiBFdcbYEdFCoEOfaS35inz1");
-
-    // SHA-256
-    String sha256 =
-        Crypt.crypt("Hello world!".toCharArray(), "$5$saltstring");
-    System.out.println(sha256);
-    assert sha256.equals("$5$saltstring$5B8vYYiY.CVt1RlTTf8KbXBH3hsxY/GNooZaBBGWEc5");
-
-    // MD5
-    String md5 = Crypt.crypt("Hello world!".toCharArray(), "$1$saltstring");
-    System.out.println(md5);
-    assert md5.equals("$1$saltstri$YMyguxXMBpd2TEZ.vS/3q1");
+    if (args.length != 2) {
+      System.err.println("usage: java -jar crypt4j.jar password salt-string");
+      return;
+    }
+    try {
+      System.out.println(Crypt.crypt(args[0].toCharArray(), args[1]));
+    }
+    catch (Exception ex) {
+      System.err.println(ex);
+    }
   }
 
 }
