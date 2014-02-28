@@ -168,7 +168,7 @@ abstract class Sha2Crypt extends Crypt {
      *     b) for the remaining N (up to  31 or 63) bytes use the first N
      *        bytes of digest DP 
      */
-    byte[] seqP = makeSequence(sumDP, password.length, digestLength);
+    final byte[] seqP = makeSequence(sumDP, password.length, digestLength);
 
     /* 17. start digest DS */
     final MessageDigest ds = type.newDigest();
@@ -243,7 +243,7 @@ abstract class Sha2Crypt extends Crypt {
   }
 
   /**
-   * Makes a sequence as described as steps 16 and 20 of the algorithm.
+   * Makes a sequence as described in steps 16 and 20 of the algorithm.
    * @param sum the intermediate sum to place into the sequence
    * @param length length of the sequence in bytes
    * @param digestLength length of the digest in bytes
