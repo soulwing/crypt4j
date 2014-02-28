@@ -28,6 +28,7 @@ import java.security.NoSuchAlgorithmException;
  */
 enum Type {
   
+  DES(0, "DES", DesCrypt.class),
   MD5(1, "MD5", Md5Crypt.class),
   SHA256(5, "SHA-256", Sha256Crypt.class),
   SHA512(6, "SHA-512", Sha512Crypt.class);

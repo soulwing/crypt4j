@@ -37,16 +37,6 @@ import org.junit.Test;
 public class CryptTest {
 
   @Test(expected = NoSuchAlgorithmException.class)
-  public void testWithImplicitDESSalt() throws Exception {
-    Crypt.crypt("password".toCharArray(), "XX");
-  }
-
-  @Test(expected = NoSuchAlgorithmException.class)
-  public void testWithExplicitDESSalt() throws Exception {
-    Crypt.crypt("password".toCharArray(), "$0$XX");
-  }
-  
-  @Test(expected = NoSuchAlgorithmException.class)
   public void testWithNonExistentType() throws Exception {
     Crypt.crypt("password".toCharArray(), "$99$XX");
   }
