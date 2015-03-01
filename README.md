@@ -1,6 +1,9 @@
 crypt4j
 =======
 
+[![Build Status](https://travis-ci.org/soulwing/crypt4j.svg?branch=master)](https://travis-ci.org/soulwing/crypt4j)
+
+
 A Java implementation of the ```crypt(3)``` function provided in the GNU C 
 library (glibc).  This implementation supports the MD5, SHA-256, and SHA-512
 variants.  Additionally, it supports legacy DES by way of the Commons Codec
