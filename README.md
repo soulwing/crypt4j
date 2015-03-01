@@ -24,6 +24,12 @@ your POM.  Crypt4j is available via [Maven Central]
     <artifactId>crypt4j</artifactId>
     <version>1.0.0</version>
   </dependency>
+  <!-- optional: needed only if you require DES password encryption -->
+  <dependency>
+    <groupId>commons-codec</groupId>
+    <artifactId>commons-codec</artifactId>
+    <version>1.10</version>
+  </dependency>
   ...  
 </dependencies>
 ```
@@ -51,7 +57,7 @@ import org.soulwing.crypt4j.Crypt;
   assert md5.equals("$1$saltstri$YMyguxXMBpd2TEZ.vS/3q1");
   
   // DES
-  // Requires Commons Codec -- add commons-codec.jar to the classpath
+  // Requires Commons Codec
   // or a NoSuchAlgorithmException will be thrown
   String des = Crypt.crypt("Hello world!".toCharArray(), "saltstring");
   assert des.equals("saszt8mUri4AI");
