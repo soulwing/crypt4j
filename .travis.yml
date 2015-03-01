@@ -1,0 +1,9 @@
+before_install: git clone -b travis $(git config --get remote.origin.url) target/travis
+script: mvn deploy --settings target/travis/settings.xml
+branches:
+  except:
+  - travis
+env:
+  global:
+  - secure: NJGWF3fkd2Pp2De/LuYHPbV7DTGgXj21HKM325VgCWO+q5iUTBvh+tDHNjB8zC65VSDXYd1ABMTQjpE/pedYWzL9lzNbb3GaYFezEADsnXRjwMebJqvNZYBeVxjNfvq1oIGzb3ngjO3WcgS3odleUN4ktn6iuUMG4bT5746scu4=
+  - secure: CRqDHaXfw1gMIQxCXeGDMlOODeS0Nn6ttMKdE3bHD7UBdDSotOKaWrDFExFWn1Dy1k3R3HgohF0c8i+inkCm30IUpMy48WojykrtEWTdaJfEXzSFn1LZoSZxZmtdwe6ndHnPKaxWakS7wVVMU50sBUVWI+ZZXEpnHWgYDkDAh3Y=
