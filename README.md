@@ -9,6 +9,25 @@ library (glibc).  This implementation supports the MD5, SHA-256, and SHA-512
 variants.  Additionally, it supports legacy DES by way of the Commons Codec
 library.
 
+Maven Artifacts
+---------------
+
+To use crypt4j in a Maven project, simply include the following dependency in
+your POM.  Crypt4j is available via [Maven Central] 
+(http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.soulwing%22).
+
+```
+<dependencies>
+  ...
+  <dependency>
+    <groupId>org.soulwing</groupId>
+    <artifactId>crypt4j</artifactId>
+    <version>1.0.0</version>
+  </dependency>
+  ...  
+</dependencies>
+```
+
 Usage
 -----
 
