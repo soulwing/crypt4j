@@ -2,6 +2,8 @@ crypt4j
 =======
 
 [![Build Status](https://travis-ci.org/soulwing/crypt4j.svg?branch=master)](https://travis-ci.org/soulwing/crypt4j)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.soulwing/cryp4j/badge.svg)](http://search.maven.org/#search%7Cga%7C1%7Cg%3Aorg.soulwing%20a%3Acrypt4j*)
+
 
 
 A Java implementation of the ```crypt(3)``` function provided in the GNU C 
