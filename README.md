@@ -2,7 +2,7 @@ crypt4j
 =======
 
 [![Build Status](https://travis-ci.org/soulwing/crypt4j.svg?branch=master)](https://travis-ci.org/soulwing/crypt4j)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.soulwing/cryp4j/badge.svg)](http://search.maven.org/#search%7Cga%7C1%7Cg%3Aorg.soulwing%20a%3Acrypt4j*)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.soulwing/crypt4j/badge.svg)](http://search.maven.org/#search%7Cga%7C1%7Cg%3Aorg.soulwing%20a%3Acrypt4j*)
 
 
 
