@@ -65,6 +65,21 @@ public abstract class Crypt {
   }
 
   /**
+   * Validate a given password against a provided hashed value
+   * @param password The password to validate
+   * @param hashedValue The hashed value to validate against
+   * @return True if the password and hashedValue validate
+   * @throws NoSuchAlgorithmException if the algorithm for the provided hashed
+   *         value is not supported on this platform
+   * @throws UnsupportedEncodingException if UTF-8 encoding is not available on
+   *         the platform
+   */
+  public static boolean validate(char[] password, String hashedValue)
+      throws NoSuchAlgorithmException, UnsupportedEncodingException {
+    return Crypt.crypt(password, hashedValue).equals(hashedValue);
+  }
+
+  /**
    * Constructs a new instance of the specified type.
    * @param type crypt type
    * @return new crypt object

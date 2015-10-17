@@ -51,10 +51,12 @@ public class CryptTest {
       String expected = properties.getProperty(i + ".expected");
       String note = properties.getProperty(i + ".note");
       String actual = Crypt.crypt(password.toCharArray(), salt);
+      boolean validates = Crypt.validate(password.toCharArray(), expected);
       System.out.println((actual.equals(expected) ? "OK" : "FAIL")
           + ": " + note);
       
-      assertThat("failed: " + note, actual, is(equalTo(expected)));
+      assertThat("failed hashing: " + note, actual, is(equalTo(expected)));
+      assertThat("failed validating: " + note, validates, is(true));
       i++;
     }
   }
