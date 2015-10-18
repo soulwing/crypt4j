@@ -6,7 +6,7 @@
     <version>4</version>
   </parent>
   <artifactId>crypt4j</artifactId>
-  <version>1.0.1-SNAPSHOT</version>
+  <version>1.0.1</version>
   <packaging>jar</packaging>
   <name>Crypt4j</name>
   <description>Unix crypt(3) for Java.</description>
@@ -30,7 +30,7 @@
     <connection>scm:git:git@github.com:soulwing/${project.artifactId}.git</connection>
     <developerConnection>${project.scm.connection}</developerConnection>
     <url>https://github.com/soulwing/${project.artifactId}</url>
-    <tag>HEAD</tag>
+    <tag>1.0.1</tag>
   </scm>
   <build>
     <plugins>
